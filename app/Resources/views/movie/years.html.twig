@@ -1,0 +1,194 @@
+{% extends 'layout_with_yify_theme.html.twig' %}
+
+{# @var movies \Doctrine\ORM\Tools\Pagination\Paginator #}
+{# @var movie \AppBundle\Entity\Movie #}
+
+{% block title %} years {% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div id="content">
+            <section class="movie_section">
+                <h1>Browse Multiple Years</h1>
+                <form method="GET" action="{{ path('movie_years') }}" id="year_form">
+                    <div id="tabs">
+                        <ul>
+                            <li><a href="#tabs-1">2016-2001</a></li>
+                            <li><a href="#tabs-2">2000-1985</a></li>
+                            <li><a href="#tabs-3">1984-1968</a></li>
+                            <li><a href="#tabs-4">1967-1953</a></li>
+                            <li><a href="#tabs-5">1952-1937</a></li>
+                            <li><a href="#tabs-6">1936-1925</a></li>
+                        </ul>
+                        <div id="tabs-1">
+                            <fieldset>
+                                <ul>
+                                    <li><label><input type="checkbox" name="year" value="2016">2016</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2015">2015</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2014">2014</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2013">2013</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2012">2012</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2011">2011</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2010">2010</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2009">2009</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2008">2008</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2007">2007</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2006">2006</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2005">2005</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2004">2004</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2003">2003</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2002">2002</label></li>
+                                    <li><label><input type="checkbox" name="year" value="2001">2001</label></li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        <div id="tabs-2">
+                            <fieldset>
+                                <ul>
+                                    <li><label><input type="checkbox" name="year" value="2000">2000</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1999">1999</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1998">1998</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1997">1997</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1996">1996</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1995">1995</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1994">1994</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1993">1993</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1992">1992</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1991">1991</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1990">1990</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1989">1989</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1988">1988</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1987">1987</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1986">1986</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1985">1985</label></li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        <div id="tabs-3">
+                            <fieldset>
+                                <ul>
+                                    <li><label><input type="checkbox" name="year" value="1984">1984</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1983">1983</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1982">1982</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1981">1981</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1980">1980</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1979">1979</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1978">1978</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1977">1977</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1976">1976</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1975">1975</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1974">1974</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1973">1973</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1972">1972</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1971">1971</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1970">1970</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1969">1969</label></li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        <div id="tabs-4">
+                            <fieldset>
+                                <ul>
+                                    <li><label><input type="checkbox" name="year" value="1968">1968</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1967">1967</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1966">1966</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1965">1965</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1964">1964</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1963">1963</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1962">1962</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1961">1961</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1960">1960</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1959">1959</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1958">1958</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1957">1957</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1956">1956</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1955">1955</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1954">1954</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1953">1953</label></li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        <div id="tabs-5">
+                            <fieldset>
+                                <ul>
+                                    <li><label><input type="checkbox" name="year" value="1952">1952</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1951">1951</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1950">1950</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1949">1949</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1948">1948</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1947">1947</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1946">1946</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1945">1945</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1944">1944</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1943">1943</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1942">1942</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1941">1941</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1940">1940</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1939">1939</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1938">1938</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1937">1937</label></li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        <div id="tabs-6">
+                            <fieldset>
+                                <ul>
+                                    <li><label><input type="checkbox" name="year" value="1936">1936</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1935">1935</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1934">1934</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1933">1933</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1932">1932</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1931">1931</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1930">1930</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1929">1929</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1928">1928</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1927">1927</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1926">1926</label></li>
+                                    <li><label><input type="checkbox" name="year" value="1925">1925</label></li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="form_buttons">
+                        <input type="submit" class="button button-filter" value="Search"/>
+                        <input type="button" class="button button-filter" value="Clear"/>
+                    </div>
+                </form>
+                {# pagination tool #}
+                {% if movies != null %}
+                    {% include 'utils/paginator.html.twig' %}
+                    <div class="movie_list">
+                        {% for movie in movies %}
+                            <article class="img-item">
+                                <figure>
+                                    <a href="{{ path('movie_show',
+                                        {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                        <img class="poster-thumb"
+                                             src="{{ vich_uploader_asset(movie, 'posterImage') }}"
+                                             width="160" height="232" alt="{{ movie.name }} - Movie Poster">
+                                        <img class="quality-thumb"
+                                             src="{{ vich_uploader_asset(movie.torrents.first.quality, 'image') }}"
+                                             width="126"
+                                             height="90"
+                                             alt="{{ movie.name }} - Download in {{ movie.torrents.first.quality.format }}p quality">
+                                    </a>
+                                    <figcaption>
+                                        <h3>
+                                            <a class="movielink"
+                                               href="{{ path('movie_show',
+                                                   {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                                {{ movie.name }}
+                                            </a>
+                                        </h3>
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        {% endfor %}
+                    </div>
+                    {# pagination tool #}
+                    {% include 'utils/paginator.html.twig' %}
+                {% endif %}
+            </section>
+        </div>
+    </div>
+{% endblock %}

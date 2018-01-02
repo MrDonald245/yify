@@ -1,0 +1,97 @@
+{% set current_route = app.request.get('_route') %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png" sizes="16x16">
+    {% block styles %}
+        <link rel="stylesheet" href="{{ asset('css/yify-theme.css') }}">
+        <link rel="stylesheet"
+              href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    {% endblock %}
+    <title>Yify - {% block title %}{% endblock %}</title>
+</head>
+<body>
+<div id="container">
+    <header>
+        <div class="toggleMobile">
+            <span class="menu1"></span>
+            <span class="menu2"></span>
+            <span class="menu3"></span>
+        </div>
+        <div id="mobileMenu">
+            <ul>
+                <li><a href="{{ path('home_index') }}">Home</a></li>
+                <li><a href="#">Years</a></li>
+                <li><a href="#">Genres</a></li>
+                <li><a href="#">Recent Movies</a></li>
+                <li><a href="#">Browse Movies</a></li>
+            </ul>
+        </div>
+        <div class="caption">
+            <div class="logo"><a href="{{ path('home_index') }}" title="YIFY Movie">
+                    <img width="300" height="60"
+                         src="{{ asset('images/logo.png') }}"
+                         alt="YIFY Movie Logo"></a>
+            </div>
+            <div class="tagline">Get Newest Movies in HD Quality</div>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="{{ path('home_index') }}"
+                       class="{{ current_route == 'home_index' ? 'current' : '' }}">Home</a></li>
+                <span class="vrbar"> | </span>
+                <li><a href="{{ path('movie_years') }}"
+                       class="{{ current_route == 'movie_years' ? 'current' : '' }}">Years</a></li>
+                <span class="vrbar"> | </span>
+                <li><a href="{{ path('movie_genres') }}"
+                       class="{{ current_route == 'movie_genres' ? 'current' : '' }}">Genres</a></li>
+                <span class="vrbar"> | </span>
+                <li><a href="#">Recent Movies</a></li>
+                <span class="vrbar"> | </span>
+                <li><a href="#">Browse Movies</a></li>
+            </ul>
+        </nav>
+        <div id="nav_search">
+            <p>Here could be you ad. <a class="motd" href="#" title="Implement your add"
+                                        rel="nofollow" target="_blank">Learn More</a></p>
+            <div class="search">
+                <form action="#" accept-charset="UTF-8" method="POST">
+                    <input name="keyword" placeholder="Search for a movie..." type="text" maxlength="128" required>
+                    <input name="start_search" class="button" value="Search" type="submit">
+                </form>
+            </div>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer id="footer">
+        <p><a href="#" title="YIFY Movie Facebook">Facebook</a> | <a href="#"
+                                                                     title="YIFY Movie Twitter">Twitter</a>
+            | <a href="#" title="Contact Us">Contact Us</a></p>
+        <div class="gotop">
+            <a href="#">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+                <span class="glyphicon-class">TOP</span>
+            </a>
+        </div>
+        <span class="copyright">2014 - 2017 &copy; <a class="yifymovie"
+                                                      href="{{ path('home_index') }}"
+                                                      title="YIFY Movie">YIFY Movie</a></span>
+    </footer>
+</div>
+</body>
+
+{% block script %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('js/years.js') }}"></script>
+{% endblock %}
+</html>

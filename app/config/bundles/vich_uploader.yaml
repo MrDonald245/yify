@@ -1,0 +1,23 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        movie_poster:
+            uri_prefix: /images/posters
+            upload_destination: '%kernel.root_dir%/../web/images/posters'
+            inject_on_load:     true
+
+        movie_screenshot:
+            uri_prefix: /images/screenshots
+            upload_destination: '%kernel.root_dir%/../web/images/screenshots'
+            inject_on_load:     true
+
+        torrent_file:
+            uri_prefix: /torrents
+            upload_destination: '%kernel.root_dir%/../web/torrents'
+            inject_on_load:     true
+
+        quality_image:
+            uri_prefix: /images/q
+            upload_destination: '%kernel.root_dir%/../web/images/q'
+            inject_on_load:     true

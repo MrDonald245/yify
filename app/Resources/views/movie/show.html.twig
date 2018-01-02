@@ -1,0 +1,166 @@
+{% extends 'layout_with_yify_theme.html.twig' %}
+
+{# @var movie \AppBundle\Entity\Movie #}
+{# @var screenshot \AppBundle\Entity\Screenshot #}
+{# @var torrent \AppBundle\Entity\Torrent #}
+
+{% block title %} {{ movie.name }} {% endblock %}
+{% block content %}
+    <div class="wrapper">
+        <div id="content">
+            <section id="movie">
+                <h1 itemprop="name">{{ movie.name }}</h1>
+                <div class="top_movie_content">
+                    <div class="movie_right">
+                        <figure>
+                            <figcaption>Movie Poster</figcaption>
+                            <a href="{{ vich_uploader_asset(movie, 'posterImage') }}"
+                               title="{{ movie.name }}">
+                                <img itemprop="image"
+                                     src="{{ vich_uploader_asset(movie, 'posterImage') }}" width="250"
+                                     height="365" alt="{{ movie.posterName }}">
+                            </a>
+                        </figure>
+                    </div>
+                    <div class="movie_middle">
+                        <dl>
+                            <dt>Genres:</dt>
+                            <dd>
+                                {% for key, genre in movie.genres %}
+                                    <a href="https://yifymovies.to/genres/Action/">
+                                        <span class="genre" itemprop="genre">{{ genre.name }}</span>
+                                    </a>
+                                    {% if key != movie.genres.count - 1 %}
+                                        |
+                                    {% endif %}
+                                {% endfor %}
+                            <dd>
+                            <dt>Quality:</dt>
+                            <dd>{{ torrent.quality.format }}p</dd>
+                            <dt>Size:</dt>
+                            <dd>{{ movie.size }}</dd>
+                            <dt>Runtime:</dt>
+                            <dd><span itemprop="duration">{{ movie.runtime }}</span></dd>
+                            <dt>Language:</dt>
+                            <dd><span itemprop="inLanguage">{{ movie.language }}</span></dd>
+                            <dt>Released Date:</dt>
+                            <dd><span itemprop="datePublished">{{ movie.releaseDateStr }}</span></dd>
+                            <hr/>
+                            <dt>IMDB Rating:</dt>
+                            <dd>{{ movie.imdbRating }}</dd>
+                        </dl>
+                    </div>
+                    <aside>
+                <span><a href="{{ torrent.magnetLink }}"
+                         id="dm" class="button button-default"
+                         alt="Download {{ movie.name }} {{ torrent.quality.format }}p via magnet"
+                         title="Download {{ movie.name }} {{ torrent.quality.format }}p via magnet">Download Magnet</a></span>
+                        <span><a href="{{ vich_uploader_asset(torrent, 'file') }}" id="dt"
+                                 class="button button-default" alt="Download torrent for Revolt (2017) 720p"
+                                 title="Download torrent for {{ movie.name }} {{ torrent.quality.format }}p">Download Torrent</a></span>
+                        <hr/>
+                        <span><a class="button yt-btn youtube"
+                                 href="{{ movie.youtubeLink }}"> Youtube Trailer</a></span>
+                        <span><a class="button imdb-btn" href="{{ movie.imdbLink }}"
+                                 target="_blank"><span class="icon icon-tag"></span> IMDB</a></span>
+                    </aside>
+                </div>
+                <div class="middle_movie_content">
+                    <div class="credits">
+                        <span><strong>Directors: </strong>{{ movie.directors }}</span><br/>
+                        <span><strong>Writers: </strong>{{ movie.writers }}</span><br/>
+                        <span><strong>Cast: </strong>{{ movie.cast }}</span><br/>
+                        <span><strong>Movie Description: </strong><br/>{{ movie.description }}</span><br/>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <section id="movie_bottom">
+        <div class="movie_left_column">
+            <h2>Screenshots</h2>
+            <ul>
+                {% for screenshot in movie.screenshots %}
+                    <li>
+                        <figure>
+                            <a class="scene-gallery"
+                               href="{{ vich_uploader_asset(screenshot, 'image') }}"
+                               title="{{ movie.name }}">
+                                <img width="400" height="165"
+                                     src="{{ vich_uploader_asset(screenshot, 'image') }}"
+                                     alt="{{ screenshot.imageName }}">
+                            </a>
+                        </figure>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="movie_right_column">
+            <h2>Related Movies:</h2>
+            <ul>
+                <li>
+                    <article>
+                        <figure>
+                            <div class="image_left">
+                                <a href="https://yifymovies.to/movie/in-time-2011-720p/">
+                                    <img width="110" height="160"
+                                         src="https://yifymovies.to/images/poster/in-time-2011-movie-poster.jpg"
+                                         alt="In Time - Read More">
+                                </a>
+                            </div>
+                            <figcaption>
+                                <h3><a class="movtitle" href="/movie/in-time-2011-720p/">In Time</a></h3>
+                                <p>Welcome to a world where time has become the ultimate currency. You stop aging at 25,
+                                    but there's a catch: you're genetically-engineered to live only one more year,
+                                    unless you can buy your way out of ...</p>
+                            </figcaption>
+                        </figure>
+                        <span class="read_more"><a
+                                    href="https://yifymovies.to/movie/in-time-2011-720p/">Read More &raquo;</a></span>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <figure>
+                            <div class="image_left">
+                                <a href="https://yifymovies.to/movie/christmas-icetastrophe-2014-720p/">
+                                    <img width="110" height="160"
+                                         src="https://yifymovies.to/images/poster/christmas-icetastrophe-2014-movie-poster.jpg"
+                                         alt="Christmas Icetastrophe - Read More">
+                                </a>
+                            </div>
+                            <figcaption>
+                                <h3><a class="movtitle" href="/movie/christmas-icetastrophe-2014-720p/">Christmas
+                                        Icetastrophe</a></h3>
+                                <p>A meteorite brings ice and freezing temperatures, which threatens to harm the
+                                    residents of a small town at Christmas.</p>
+                            </figcaption>
+                        </figure>
+                        <span class="read_more"><a href="https://yifymovies.to/movie/christmas-icetastrophe-2014-720p/">Read More &raquo;</a></span>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <figure>
+                            <div class="image_left">
+                                <a href="https://yifymovies.to/movie/dredd-2012-1080p/">
+                                    <img width="110" height="160"
+                                         src=""
+                                         alt="">
+                                </a>
+                            </div>
+                            <figcaption>
+                                <h3><a class="movtitle" href="/movie/dredd-2012-1080p/">Dredd</a></h3>
+                                <p>The future America is an irradiated waste land. On its East Coast, running from
+                                    Boston to Washington DC, lies Mega City One - a vast, violent metropolis where
+                                    criminals rule the chaotic streets. The o...</p>
+                            </figcaption>
+                        </figure>
+                        <span class="read_more"><a
+                                    href="https://yifymovies.to/movie/dredd-2012-1080p/">Read More &raquo;</a></span>
+                    </article>
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
