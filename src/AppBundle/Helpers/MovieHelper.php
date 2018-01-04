@@ -10,8 +10,8 @@ namespace AppBundle\Helpers;
 
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Torrent;
 use AppBundle\Repository\MovieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -31,12 +31,37 @@ class MovieHelper
     }
 
     /**
+     * @return array
+     */
+    public function getLatest(): array {
+        return $this->movieRepository->findLatest();
+    }
+
+    /**
+     * @return array
+     */
+    public function getPopular(): array {
+        return $this->movieRepository->findPopular();
+    }
+
+    /**
      * @param string $years in 'yyyy-yyyy...-yyyy' format
      * @param int $page
      * @param int $limit
      * @return Paginator
      */
-    public function getMoviesByYears(string $years, int $page, int $limit): Paginator {
+    public function getByYears(string $years, int $page, int $limit): Paginator {
         return $this->movieRepository->findManyByYears(explode('-', $years), $page, $limit);
+    }
+
+    /**
+     * @param Torrent $torrent
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function download(Torrent $torrent): void {
+        $movie = $this->movieRepository->findByTorrent($torrent);
+        $this->movieRepository->downloadCountIterate($movie);
     }
 }

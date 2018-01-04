@@ -51,12 +51,12 @@
                         </dl>
                     </div>
                     <aside>
-                <span><a href="{{ torrent.magnetLink }}"
+                <span><a href="{{ path('movie_download', { 'torrent': torrent.id, 'magnet': 'magnet' }) }}"
                          id="dm" class="button button-default"
                          alt="Download {{ movie.name }} {{ torrent.quality.format }}p via magnet"
                          title="Download {{ movie.name }} {{ torrent.quality.format }}p via magnet">Download Magnet</a></span>
-                        <span><a href="{{ vich_uploader_asset(torrent, 'file') }}" id="dt"
-                                 class="button button-default" alt="Download torrent for Revolt (2017) 720p"
+                        <span><a href="{{ path('movie_download', { 'torrent': torrent.id }) }}" id="dt"
+                                 class="button button-default" alt="Download torrent for {{ movie.name }} 720p"
                                  title="Download torrent for {{ movie.name }} {{ torrent.quality.format }}p">Download Torrent</a></span>
                         <hr/>
                         <span><a class="button yt-btn youtube"

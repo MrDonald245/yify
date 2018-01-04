@@ -53,7 +53,7 @@ class MovieController extends Controller
         $maxPages = 0;
 
         if (isset($years)) {
-            $movies = $this->movieHelper->getMoviesByYears($years, $page, $limit);
+            $movies = $this->movieHelper->getByYears($years, $page, $limit);
             $maxPages = ceil($movies->count() / $limit);
         }
 
@@ -75,5 +75,29 @@ class MovieController extends Controller
      */
     public function filterByGenres(int $page = 1, string $genres = null): Response {
         return $this->render('movie/genres.html.twig');
+    }
+
+    /**
+     * @Route("/download/{torrent}/{magnet}", name="movie_download",
+     *     requirements={"magnet"="magnet"})
+     *
+     * @param Torrent $torrent
+     * @param string|null $magnet
+     * @return Response
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function download(Torrent $torrent, string $magnet = null): Response {
+        $this->movieHelper->download($torrent);
+
+        $isMagnet = $magnet == 'magnet';
+        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+
+        $url = $isMagnet
+            ? $torrent->getMagnetLink()
+            : $helper->asset($torrent, 'file');
+
+        return $this->redirect($url);
     }
 }

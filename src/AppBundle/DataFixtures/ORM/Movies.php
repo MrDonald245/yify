@@ -86,7 +86,8 @@ class Movies extends Fixture
                 ->setImdbLink('#')
                 ->setYoutubeLink('#')
                 ->setPosterImage($poster)
-                ->setPosterName($poster->getFilename());
+                ->setPosterName($poster->getFilename())
+                ->setDownloaded(rand(0, 100));
 
             $g_max_count = rand(3, 6);
             for ($g_count = 0; $g_count < $g_max_count; ++$g_count) {

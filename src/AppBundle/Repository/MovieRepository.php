@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Movie;
+use AppBundle\Entity\Torrent;
 use DateTime;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -20,7 +22,19 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
      */
     public function findLatest(int $limit = 10) {
         return $this->createQueryBuilder('m')
-            ->orderBy('m.createdAt', 'ASC')
+            ->setMaxResults($limit)
+            ->orderBy('m.createdAt', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function findPopular(int $limit = 10) {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.downloaded', 'DESC')
             ->getQuery()
             ->execute();
     }
@@ -51,6 +65,32 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $this->paginate($qb->getQuery(), $currentPage, $limit);
+    }
+
+    /**
+     * @param Torrent $torrent
+     * @return Movie
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByTorrent(Torrent $torrent): Movie {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.torrents', 't', 'WITH', 't.id = :torrentId')
+            ->setParameter('torrentId', $torrent->getId())
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    /**
+     * Make movie->downloaded++
+     *
+     * @param Movie $movie
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function downloadCountIterate(Movie $movie): void {
+        $em = $this->getEntityManager();
+        $movie->setDownloaded($movie->getDownloaded() + 1);
+        $em->flush();
     }
 
     /**

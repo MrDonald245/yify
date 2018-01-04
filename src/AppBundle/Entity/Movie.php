@@ -176,6 +176,13 @@ class Movie
     private $updatedAt;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $downloaded = 0;
+
+    /**
      * Movie constructor.
      */
     public function __construct() {
@@ -348,6 +355,12 @@ class Movie
         return $this->torrents;
     }
 
+    /**
+     * @return int
+     */
+    public function getDownloaded(): int {
+        return $this->downloaded;
+    }
 
     /**
      * @param string $name
@@ -520,6 +533,14 @@ class Movie
         return $this;
     }
 
+    /**
+     * @param int $downloaded
+     * @return Movie
+     */
+    public function setDownloaded(int $downloaded): Movie {
+        $this->downloaded = $downloaded;
+        return $this;
+    }
 
     /**
      * @param Genre $genre

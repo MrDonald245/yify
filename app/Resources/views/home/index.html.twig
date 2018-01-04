@@ -1,6 +1,7 @@
 {% extends "layout_with_yify_theme.html.twig" %}
 
 {# @var latest_movie \AppBundle\Entity\Movie #}
+{# @var popular_movie \AppBundle\Entity\Movie #}
 {# @var torrent \AppBundle\Entity\Torrent #}
 
 {% block title %} home page {% endblock %}
@@ -45,178 +46,35 @@
             <section class="movie_section">
                 <h1>Popular Movies</h1>
                 <div class="movie_list">
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/get-out-2017-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/get-out-2017-movie-poster.jpg" width="160"
-                                     height="232" alt="Get Out - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Get Out - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink" href="https://yifymovies.to/movie/get-out-2017-1080p/">Get
-                                        Out</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/logan-2017-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/logan-2017-movie-poster.jpg" width="160"
-                                     height="232" alt="Logan - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Logan - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink" href="https://yifymovies.to/movie/logan-2017-1080p/">Logan</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/guardians-of-the-galaxy-vol-2-2017-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/guardians-of-the-galaxy-vol-2-2017-movie-poster.jpg"
-                                     width="160" height="232" alt="Guardians of the Galaxy Vol. 2 - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Guardians of the Galaxy Vol. 2 - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink"
-                                       href="https://yifymovies.to/movie/guardians-of-the-galaxy-vol-2-2017-1080p/">Guardians
-                                        of the Galaxy Vol. 2</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/sherlock-the-abominable-bride-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/sherlock-the-abominable-bride-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Sherlock: The Abominable Bride - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Sherlock: The Abominable Bride - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink"
-                                       href="https://yifymovies.to/movie/sherlock-the-abominable-bride-2016-1080p/">Sherlock:
-                                        The Abominable Bride</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/deadpool-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/deadpool-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Deadpool - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Deadpool - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink" href="https://yifymovies.to/movie/deadpool-2016-1080p/">Deadpool</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/zootopia-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/zootopia-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Zootopia - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Zootopia - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink" href="https://yifymovies.to/movie/zootopia-2016-1080p/">Zootopia</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/sing-street-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/sing-street-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Sing Street - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Sing Street - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink" href="https://yifymovies.to/movie/sing-street-2016-1080p/">Sing
-                                        Street</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/captain-america-civil-war-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/captain-america-civil-war-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Captain America: Civil War - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Captain America: Civil War - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink"
-                                       href="https://yifymovies.to/movie/captain-america-civil-war-2016-1080p/">Captain
-                                        America: Civil War</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/hunt-for-the-wilderpeople-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/hunt-for-the-wilderpeople-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Hunt for the Wilderpeople - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Hunt for the Wilderpeople - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink"
-                                       href="https://yifymovies.to/movie/hunt-for-the-wilderpeople-2016-1080p/">Hunt for
-                                        the Wilderpeople</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                    <article class="img-item">
-                        <figure>
-                            <a href="https://yifymovies.to/movie/captain-fantastic-2016-1080p/">
-                                <img class="poster-thumb"
-                                     src="https://yifymovies.to/images/poster/captain-fantastic-2016-movie-poster.jpg"
-                                     width="160" height="232" alt="Captain Fantastic - Movie Poster">
-                                <img class="quality-thumb" src="https://yifymovies.to/images/q/1080p.png" width="126"
-                                     height="90" alt="Captain Fantastic - Download in 1080p quality">
-                            </a>
-                            <figcaption>
-                                <h3>
-                                    <a class="movielink"
-                                       href="https://yifymovies.to/movie/captain-fantastic-2016-1080p/">Captain
-                                        Fantastic</a>
-                                </h3>
-                            </figcaption>
-                        </figure>
-                    </article>
+                    {% for popular_movie in popular_movies if popular_movie is not null %}
+                        {% set torrent = popular_movie.torrents.first %}
+                        <article class="img-item">
+                            <figure>
+                                <a href="{{ path('movie_show',
+                                    {'movie': popular_movie.id, 'quality': torrent.quality.format }) }}">
+                                    <img class="poster-thumb"
+                                         src="{{ vich_uploader_asset(popular_movie, 'posterImage') }}"
+                                         width="160"
+                                         height="232" alt="Revolt - Movie Poster">
+                                    <img class="quality-thumb"
+                                         src="{{ vich_uploader_asset(torrent.quality, 'image') }}" width="126"
+                                         height="90"
+                                         alt="{{ popular_movie.name }} - Download in {{ torrent.quality.format }}p quality">
+                                </a>
+                                <figcaption>
+                                    <h3>
+                                        <a class="movielink"
+                                           href="{{ path('movie_show',
+                                               {'movie': popular_movie.id, 'quality': torrent.quality.format }) }}">
+                                            {{ popular_movie.name }}
+                                        </a>
+                                    </h3>
+                                </figcaption>
+                            </figure>
+                        </article>
+                    {% else %}
+                        <p>There are no movies.</p>
+                    {% endfor %}
                 </div>
             </section>
             <br class="clear">
