@@ -10,7 +10,7 @@
         <div id="content">
             <section class="movie_section">
                 <h1>Browse Multiple Years</h1>
-                <form method="GET" action="{{ path('movie_years') }}" id="year_form">
+                <form method="GET" id="year_form">
                     <div id="tabs">
                         <ul>
                             <li><a href="#tabs-1">2016-2001</a></li>
@@ -191,4 +191,9 @@
             </section>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="{{ asset('js/years.js') }}"></script>
 {% endblock %}

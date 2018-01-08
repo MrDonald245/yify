@@ -58,7 +58,7 @@ class MovieController extends Controller
         }
 
         return $this->render('movie/years.html.twig', [
-            'years' => $years,
+            'uri' => $years,
             'movies' => $movies,
             'maxPages' => $maxPages,
             'thisPage' => $page,
@@ -67,15 +67,31 @@ class MovieController extends Controller
 
     /**
      * @Route("/genres/{genres}/{page}", name="movie_genres",
-     *     requirements={"genres"="\w+", "page"="\d+"})
+     *     requirements={"genres"="(\w+-?)+", "page"="\d+"})
      *
      * @param int $page
      * @param string|null $genres
      * @return Response
      */
-    public function filterByGenres(int $page = 1, string $genres = null): Response {
-        return $this->render('movie/genres.html.twig');
+    public function filterByGenresAction(int $page = 1, string $genres = null): Response {
+        $limit = $this->getParameter('paginator_limit');
+
+        $movies = null;
+        $maxPages = 0;
+
+        if (isset($genres)) {
+            $movies = $this->movieHelper->getByGenres($genres, $page, $limit);
+            $maxPages = ceil($movies->count() / $limit);
+        }
+
+        return $this->render('movie/genres.html.twig', [
+            'uri' => $genres,
+            'movies' => $movies,
+            'maxPages' => $maxPages,
+            'thisPage' => $page,
+        ]);
     }
+
 
     /**
      * @Route("/download/{torrent}/{magnet}", name="movie_download",

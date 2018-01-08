@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\Torrent;
 use DateTime;
@@ -45,7 +46,7 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
      * @param int|null $limit
      * @return Paginator
      */
-    public function findManyByYears(array $years, int $currentPage = 1, int $limit = 20) {
+    public function findManyByYears(array $years, int $currentPage = 1, int $limit = 20): Paginator {
         $qb = $this->createQueryBuilder('m');
 
         foreach ($years as $index => $year) {
@@ -63,6 +64,35 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
             $qb->setParameter('from' . $index, $from->format('Y-m-d'));
             $qb->setParameter('to' . $index, $to->format('Y-m-d'));
         }
+
+        return $this->paginate($qb->getQuery(), $currentPage, $limit);
+    }
+
+    /**
+     *
+     * @param array $genres
+     * @param int $currentPage
+     * @param int $limit
+     * @return Paginator
+     */
+    public function findManyByGenres(array $genres, int $currentPage = 1, int $limit = 20): Paginator {
+        $qb = $this->createQueryBuilder('m');
+        $qb->innerJoin('m.genres', 'g');
+
+        /*foreach ($genres as $index => $genre) {
+            if ($index == 0) {
+                $qb->where('g.name = :genreName');
+            } else {
+                $qb->andWhere('g.name = :genreName');
+            }
+
+            $qb->setParameter('genreName', $genre);
+        }*/
+
+        $qb->where('g.name IN (:genreNames)')
+            ->groupBy('m.id')
+            ->having('count(g.name) = ' . count($genres))
+            ->setParameter('genreNames', $genres);
 
         return $this->paginate($qb->getQuery(), $currentPage, $limit);
     }

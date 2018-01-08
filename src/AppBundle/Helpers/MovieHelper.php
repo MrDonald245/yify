@@ -55,6 +55,16 @@ class MovieHelper
     }
 
     /**
+     * @param string $years
+     * @param int $page
+     * @param int $limit
+     * @return Paginator
+     */
+    public function getByGenres(string $years, int $page, int $limit): Paginator {
+        return $this->movieRepository->findManyByGenres(explode('-', $years), $page, $limit);
+    }
+
+    /**
      * @param Torrent $torrent
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException

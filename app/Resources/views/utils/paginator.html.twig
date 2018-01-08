@@ -1,15 +1,16 @@
 <ul class="pagination">
     {# `«` arrow  #}
     <li {{ thisPage == 1 ? 'class="disabled"' }}>
-        <a href="{{ path('movie_years',
-            { 'years': years, 'page': thisPage-1 < 1 ? 1 : thisPage-1}) }}">&laquo;
+        <a href="{{ path(app.request.attributes.get('_route'),
+            { 'uri': uri, 'page': thisPage-1 < 1 ? 1 : thisPage-1}) }}">&laquo;
         </a>
     </li>
     {# Render each page number #}
     {% set break = false %}
     {% for i in thisPage..maxPages if not break %}
         <li {{ thisPage == i ? 'class="active"' }}>
-            <a href="{{ path('movie_years', {'years': years, 'page': i}) }}">{{ i }}</a>
+            <a href="{{ path( app.request.attributes.get('_route'),
+                {'uri': uri, 'page': i}) }}">{{ i }}</a>
         </li>
         {% if maxPages < 4 %}
             {% set break = true %}
@@ -17,8 +18,8 @@
     {% endfor %}
     {# `»` arrow #}
     <li {{ thisPage == maxPages ? 'class="disabled"' }}>
-        <a href="{{ path('movie_years',
-            {'years': years, 'page': thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}">&raquo;
+        <a href="{{ path(app.request.attributes.get('_route'),
+            {'uri': uri, 'page': thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}">&raquo;
         </a>
     </li>
 </ul>

@@ -3,7 +3,82 @@
 {% block title %}genres{% endblock %}
 
 {% block content %}
+    <div class="wrapper">
+        <div id="content">
+            <section class="movie_section">
+                <h1>Browse by multiple genres</h1>
+                <form method="GET" id="genres_form">
+                    <div id="genre_form">
+                        <fieldset>
+                            <ul>
+                                <li><label><input type="checkbox" name="genre" value="Action">Action</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Adventure">Adventure</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Animation">Animation</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Biography">Biography</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Comedy">Comedy</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Crime">Crime</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Documentary">Documentary</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Drama">Drama</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Family">Family</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Fantasy">Fantasy</label></li>
+                                <li><label><input type="checkbox" name="genre" value="History">History</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Horror">Horror</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Musical">Musical</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Mystery">Mystery</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Romance">Romance</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Sci-Fi">Sci-Fi</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Sport">Sport</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Thriller">Thriller</label></li>
+                                <li><label><input type="checkbox" name="genre" value="War">War</label></li>
+                                <li><label><input type="checkbox" name="genre" value="Western">Western</label></li>
+                            </ul>
+                        </fieldset>
+                    </div>
+                    <div class="form_buttons">
+                        <input type="submit" class="button button-filter" value="Search" />
+                        <input type="button" class="button button-filter" value="Clear" />
+                    </div>
+                </form>
+                {% if movies != null %}
+                    {# pagination tool #}
+                    {% include 'utils/paginator.html.twig' %}
+                    <div class="movie_list">
+                        {% for movie in movies %}
+                            <article class="img-item">
+                                <figure>
+                                    <a href="{{ path('movie_show',
+                                        {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                        <img class="poster-thumb"
+                                             src="{{ vich_uploader_asset(movie, 'posterImage') }}"
+                                             width="160" height="232" alt="{{ movie.name }} - Movie Poster">
+                                        <img class="quality-thumb"
+                                             src="{{ vich_uploader_asset(movie.torrents.first.quality, 'image') }}"
+                                             width="126"
+                                             height="90"
+                                             alt="{{ movie.name }} - Download in {{ movie.torrents.first.quality.format }}p quality">
+                                    </a>
+                                    <figcaption>
+                                        <h3>
+                                            <a class="movielink"
+                                               href="{{ path('movie_show',
+                                                   {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                                {{ movie.name }}
+                                            </a>
+                                        </h3>
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        {% endfor %}
+                    </div>
+                    {# pagination tool #}
+                    {% include 'utils/paginator.html.twig'%}
+                {% endif %}
+            </section>
+        </div>
+    </div>
+{% endblock %}
 
-    <p>Here should be content of the page</p>
-
+{% block script %}
+    {{ parent() }}
+    <script src="{{ asset('js/genres.js') }}"></script>
 {% endblock %}
