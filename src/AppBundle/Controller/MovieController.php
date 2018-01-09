@@ -92,6 +92,25 @@ class MovieController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/recent/{page}", name="movie_recent",
+     *     requirements={"page"="\d+"})
+     *
+     * @param int $page
+     * @return Response
+     */
+    public function showRecentAction(int $page = 1): Response {
+        $limit = $this->getParameter('paginator_limit');
+
+        $movies = $this->movieHelper->getRecent($page, $limit);
+        $maxPages = ceil($movies->count() / $limit);
+
+        return $this->render('movie/recent.html.twig', [
+            'movies' => $movies,
+            'maxPages' => $maxPages,
+            'thisPage' => $page,
+        ]);
+    }
 
     /**
      * @Route("/download/{torrent}/{magnet}", name="movie_download",

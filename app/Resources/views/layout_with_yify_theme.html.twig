@@ -49,7 +49,8 @@
                 <li><a href="{{ path('movie_genres') }}"
                        class="{{ current_route == 'movie_genres' ? 'current' : '' }}">Genres</a></li>
                 <span class="vrbar"> | </span>
-                <li><a href="#">Recent Movies</a></li>
+                <li><a href="{{ path('movie_recent') }}"
+                       class="{{ current_route == 'movie_recent' ? 'current' : '' }}">Recent Movies</a></li>
                 <span class="vrbar"> | </span>
                 <li><a href="#">Browse Movies</a></li>
             </ul>

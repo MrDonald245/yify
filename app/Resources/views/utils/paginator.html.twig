@@ -1,3 +1,7 @@
+{% if uri is not defined %}
+    {% set uri = '' %}
+{% endif %}
+
 <ul class="pagination">
     {# `«` arrow  #}
     <li {{ thisPage == 1 ? 'class="disabled"' }}>

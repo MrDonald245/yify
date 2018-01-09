@@ -65,6 +65,15 @@ class MovieHelper
     }
 
     /**
+     * @param int $page
+     * @param int $limit
+     * @return Paginator
+     */
+    public function getRecent(int $page, int $limit):Paginator {
+        return $this->movieRepository->findRecent($page, $limit);
+    }
+
+    /**
      * @param Torrent $torrent
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException

@@ -79,20 +79,22 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('m');
         $qb->innerJoin('m.genres', 'g');
 
-        /*foreach ($genres as $index => $genre) {
-            if ($index == 0) {
-                $qb->where('g.name = :genreName');
-            } else {
-                $qb->andWhere('g.name = :genreName');
-            }
-
-            $qb->setParameter('genreName', $genre);
-        }*/
-
         $qb->where('g.name IN (:genreNames)')
             ->groupBy('m.id')
             ->having('count(g.name) = ' . count($genres))
             ->setParameter('genreNames', $genres);
+
+        return $this->paginate($qb->getQuery(), $currentPage, $limit);
+    }
+
+    /**
+     * @param int $currentPage
+     * @param int $limit
+     * @return Paginator
+     */
+    public function findRecent(int $currentPage = 1, int $limit = 20): Paginator {
+        $qb = $this->createQueryBuilder('m');
+        $qb->orderBy('m.createdAt');
 
         return $this->paginate($qb->getQuery(), $currentPage, $limit);
     }
