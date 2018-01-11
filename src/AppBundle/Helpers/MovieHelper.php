@@ -13,7 +13,10 @@ use AppBundle\Entity\Movie;
 use AppBundle\Entity\Torrent;
 use AppBundle\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MovieHelper
 {
@@ -21,13 +24,20 @@ class MovieHelper
      * @var MovieRepository
      */
     private $movieRepository;
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
 
     /**
      * MovieHelper constructor.
      * @param EntityManagerInterface $entityManager
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container) {
         $this->movieRepository = $entityManager->getRepository(Movie::class);
+        $this->container = $container;
     }
 
     /**
@@ -48,29 +58,35 @@ class MovieHelper
      * @param string $years in 'yyyy-yyyy...-yyyy' format
      * @param int $page
      * @param int $limit
-     * @return Paginator
+     * @return PaginationInterface
      */
-    public function getByYears(string $years, int $page, int $limit): Paginator {
-        return $this->movieRepository->findManyByYears(explode('-', $years), $page, $limit);
+    public function getByYears(string $years, int $page, int $limit): PaginationInterface {
+        return $this->getPaginator()->paginate(
+            $this->movieRepository->getManyByYearsQuery(
+                explode('-', $years)), $page, $limit);
     }
 
     /**
-     * @param string $years
+     * @param string $genres
      * @param int $page
      * @param int $limit
      * @return Paginator
      */
-    public function getByGenres(string $years, int $page, int $limit): Paginator {
-        return $this->movieRepository->findManyByGenres(explode('-', $years), $page, $limit);
+    public function getByGenres(string $genres, int $page, int $limit) {
+        return $this->getPaginator()->paginate(
+            $this->movieRepository->getManyByGenresQuery(
+                explode('-', $genres)), $page, $limit, ['wrap-queries'=>true]);
     }
 
     /**
      * @param int $page
      * @param int $limit
-     * @return Paginator
+     *
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function getRecent(int $page, int $limit):Paginator {
-        return $this->movieRepository->findRecent($page, $limit);
+    public function getRecent(int $page, int $limit): PaginationInterface {
+        return $this->getPaginator()->paginate(
+            $this->movieRepository->getRecentQuery(), $page, $limit);
     }
 
     /**
@@ -78,9 +94,17 @@ class MovieHelper
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function download(Torrent $torrent): void {
         $movie = $this->movieRepository->findByTorrent($torrent);
         $this->movieRepository->downloadCountIterate($movie);
+    }
+
+    /**
+     * @return \Knp\Component\Pager\Paginator|object
+     */
+    private function getPaginator(): Paginator {
+        return $this->container->get('knp_paginator');
     }
 }

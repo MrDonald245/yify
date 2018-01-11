@@ -156,7 +156,7 @@
                 </form>
                 {# pagination tool #}
                 {% if movies != null %}
-                    {% include 'utils/paginator.html.twig' %}
+                    {{ knp_pagination_render(movies) }}
                     <div class="movie_list">
                         {% for movie in movies %}
                             <article class="img-item">
@@ -186,7 +186,7 @@
                         {% endfor %}
                     </div>
                     {# pagination tool #}
-                    {% include 'utils/paginator.html.twig' %}
+                    {{ knp_pagination_render(movies) }}
                 {% endif %}
             </section>
         </div>

@@ -2,12 +2,10 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\Torrent;
 use DateTime;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * MovieRepository
@@ -36,17 +34,16 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
     public function findPopular(int $limit = 10) {
         return $this->createQueryBuilder('m')
             ->orderBy('m.downloaded', 'DESC')
+            ->setMaxResults($limit)
             ->getQuery()
             ->execute();
     }
 
     /**
      * @param array $years
-     * @param int|null $currentPage
-     * @param int|null $limit
-     * @return Paginator
+     * @return Query
      */
-    public function findManyByYears(array $years, int $currentPage = 1, int $limit = 20): Paginator {
+    public function getManyByYearsQuery(array $years): Query {
         $qb = $this->createQueryBuilder('m');
 
         foreach ($years as $index => $year) {
@@ -65,17 +62,15 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
             $qb->setParameter('to' . $index, $to->format('Y-m-d'));
         }
 
-        return $this->paginate($qb->getQuery(), $currentPage, $limit);
+        return $qb->getQuery();
     }
 
     /**
      *
      * @param array $genres
-     * @param int $currentPage
-     * @param int $limit
-     * @return Paginator
+     * @return Query
      */
-    public function findManyByGenres(array $genres, int $currentPage = 1, int $limit = 20): Paginator {
+    public function getManyByGenresQuery(array $genres): Query {
         $qb = $this->createQueryBuilder('m');
         $qb->innerJoin('m.genres', 'g');
 
@@ -84,19 +79,14 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
             ->having('count(g.name) = ' . count($genres))
             ->setParameter('genreNames', $genres);
 
-        return $this->paginate($qb->getQuery(), $currentPage, $limit);
+        return $qb->getQuery();
     }
 
     /**
-     * @param int $currentPage
-     * @param int $limit
-     * @return Paginator
+     * @return Query
      */
-    public function findRecent(int $currentPage = 1, int $limit = 20): Paginator {
-        $qb = $this->createQueryBuilder('m');
-        $qb->orderBy('m.createdAt');
-
-        return $this->paginate($qb->getQuery(), $currentPage, $limit);
+    public function getRecentQuery(): Query {
+        return $this->createQueryBuilder('m')->orderBy('m.createdAt')->getQuery();
     }
 
     /**
@@ -118,25 +108,11 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
      *
      * @param Movie $movie
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function downloadCountIterate(Movie $movie): void {
         $em = $this->getEntityManager();
         $movie->setDownloaded($movie->getDownloaded() + 1);
         $em->flush();
-    }
-
-    /**
-     * @param Query $query
-     * @param int $page
-     * @param int $limit
-     * @return Paginator
-     */
-    private function paginate(Query $query, int $page, int $limit): Paginator {
-        $paginator = new Paginator($query);
-        $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
-
-        return $paginator;
     }
 }
