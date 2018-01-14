@@ -99,6 +99,26 @@ class MovieController extends Controller
     }
 
     /**
+     * @Route("/search/{page}",
+     *     name="movie_search")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return Response
+     */
+    public function searchAction(int $page = 1, Request $request): Response {
+        $movies = null;
+
+        if ($request->isMethod('post')) {
+            $movies = $this->movieHelper->browse($page, $request->request->all());
+        }
+
+        return $this->render('movie/search.html.twig', [
+            'movies' => $movies,
+        ]);
+    }
+
+    /**
      * @Route("/download/{torrent}/{magnet}", name="movie_download",
      *     requirements={"magnet"="magnet"})
      *

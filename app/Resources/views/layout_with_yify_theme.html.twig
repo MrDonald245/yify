@@ -52,14 +52,15 @@
                 <li><a href="{{ path('movie_recent') }}"
                        class="{{ current_route == 'movie_recent' ? 'current' : '' }}">Recent Movies</a></li>
                 <span class="vrbar"> | </span>
-                <li><a href="#">Browse Movies</a></li>
+                <li><a href="{{ path('movie_search') }}"
+                       class="{{ current_route == 'movie_search' ? 'current' : '' }}">Browse Movies</a></li>
             </ul>
         </nav>
         <div id="nav_search">
             <p>Here could be you ad. <a class="motd" href="#" title="Implement your add"
                                         rel="nofollow" target="_blank">Learn More</a></p>
             <div class="search">
-                <form action="#" accept-charset="UTF-8" method="POST">
+                <form action="{{ path('movie_search') }}" accept-charset="UTF-8" method="POST">
                     <input name="keyword" placeholder="Search for a movie..." type="text" maxlength="128" required>
                     <input name="start_search" class="button" value="Search" type="submit">
                 </form>

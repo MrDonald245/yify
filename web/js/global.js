@@ -1,10 +1,10 @@
 function resetForm() {
-    document.getElementById("keywords")
-        .value = "", document.getElementById("quality")
-        .value = "All", document.getElementById("genres")
-        .value = "All", document.getElementById("rating")
-        .value = "All", document.getElementById("orderby")
-        .value = "latest", document.getElementById("limit").value = "20"
+    document.getElementById("keywords").value = "";
+    document.getElementById("quality").value = "720p";
+    document.getElementById("genres").value = "All";
+    document.getElementById("rating").value = "0";
+    document.getElementById("orderby").value = "latest";
+    document.getElementById("limit").value = "20";
 }
 
 !function (a, b, c, d) {

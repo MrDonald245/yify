@@ -3,9 +3,11 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Quality;
 use AppBundle\Entity\Torrent;
 use DateTime;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * MovieRepository
@@ -87,6 +89,101 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getRecentQuery(): Query {
         return $this->createQueryBuilder('m')->orderBy('m.createdAt')->getQuery();
+    }
+
+    /**
+     * @param string $keyword
+     * @param string $quality
+     * @param string $genre
+     * @param int $rating
+     * @param string $orderBy
+     * @return Query
+     */
+    public function getByFiltersQuery(string $keyword, string $quality = null,
+                                      string $genre = null, int $rating = null,
+                                      string $orderBy = null): Query {
+        $qb = $this->prepareQueryBuilderWithJoin($quality, $genre);
+
+        if (!empty($keyword)) {
+            $qb->andWhere('m.name LIKE :keyword');
+            $qb->setParameter('keyword', '%' . $keyword . '%');
+        }
+
+        if ($genre != null) {
+            if ($genre != "All") {
+                $qb->andWhere('g.name = :genreName');
+                $qb->setParameter('genreName', $genre);
+            }
+        }
+
+        if ($rating != 0 || $rating != null) {
+            $qb->andWhere('m.imdbRating >= :rating');
+            $qb->setParameter('rating', $rating);
+        }
+
+        if ($quality != null) {
+            $qb->andWhere('q.format = :quality');
+            $qb->setParameter('quality', $quality);
+        }
+
+        if ($orderBy != null) {
+            switch ($orderBy) {
+                case 'lates':
+                    $qb->orderBy('m.createdAt', 'ASC');
+                    break;
+                case 'oldest':
+                    $qb->orderBy('m.createdAt', 'DESC');
+                    break;
+                case 'sizelw':
+                    $qb->orderBy('m.size', 'ASC');
+                    break;
+                case 'sizehg':
+                    $qb->orderBy('m.size', 'DESC');
+                    break;
+                case 'year_asc':
+                    $qb->orderBy('m.releaseDate', 'ASC');
+                    break;
+                case 'year_desc':
+                    $qb->orderBy('m.releaseDate', 'DESC');
+                    break;
+                case 'A-Z':
+                    $qb->orderBy('m.name', 'ASC');
+                    break;
+                case 'Z-A':
+                    $qb->orderBy('m.name', 'DESC');
+                    break;
+                case 'topdl':
+                    $qb->orderBy('m.downloaded', 'DESC');
+                    break;
+                case 'rating':
+                    $qb->orderBy('m.imdbRating', 'DESC');
+            }
+        }
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param string $quality
+     * @param string $genre
+     * @return QueryBuilder
+     */
+    private function prepareQueryBuilderWithJoin(string $quality = null, string $genre = null): QueryBuilder {
+        $qb = $this->createQueryBuilder('m');
+
+        if ($genre || $genre != null) {
+            $qb->innerJoin('m.genres', 'g');
+            $qb->addSelect('g');
+        }
+
+        if ($quality || $genre != null) {
+            $qb->innerJoin('m.torrents', 't');
+            $qb->innerJoin('t.quality', 'q');
+            $qb->addSelect('t');
+            $qb->addSelect('q');
+        }
+
+        return $qb;
     }
 
     /**

@@ -1,0 +1,124 @@
+{% extends 'layout_with_yify_theme.html.twig' %}
+
+{% block title %} browse movies {% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div id="content">
+            <section class="movie_section">
+                <h1>Browse by multiple genres</h1>
+                <form action="{{ path('movie_search') }}" id="browse_form" accept-charset="UTF-8" method="POST">
+                    <div class="form-group">
+                        <label class="keyword" for="keywords">Search Movie:</label>
+                        <input name="keyword" id="keywords" value="" maxlength="300" tabindex="1" type="text" placeholder="(e.g. Movie Title , Year, Actor , Director ) ..." class="keyword">
+                    </div>
+                    <div class="select">
+                        <label for="quality">Quality:</label>
+                        <select name="quality" id="quality">
+                            <option value="720p">720p</option>
+                            <option value="1080p">1080p</option>
+                        </select>
+                        <label for="genres">Genre:</label>
+                        <select name="genres" id="genres">
+                            <option value="All">All</option>
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Family">Family</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Film-Noir">Film-Noir</option>
+                            <option value="History">History</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Music">Music</option>
+                            <option value="Musical">Musical</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                            <option value="Short">Short</option>
+                            <option value="Sport">Sport</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="War">War</option>
+                            <option value="Western">Western</option>
+                        </select>
+                        <label for="rating">Rating:</label>
+                        <select name="rating" id="rating">
+                            <option value="0">All</option>
+                            <option value="10">10</option>
+                            <option value="9">9+</option>
+                            <option value="8">8+</option>
+                            <option value="7">7+</option>
+                            <option value="6">6+</option>
+                            <option value="5">5+</option>
+                            <option value="4">4+</option>
+                            <option value="3">3+</option>
+                            <option value="2">2+</option>
+                            <option value="1">1+</option>
+                        </select>
+                        <label for="orderby">Order By:</label>
+                        <select name="orderby" id="orderby">
+                            <option value="latest">Latest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="sizelw">Lowest Size</option>
+                            <option value="sizehg">Highest Size</option>
+                            <option value="year_asc">Year ASC</option>
+                            <option value="year_desc">Year DESC</option>
+                            <option value="A-Z">A-Z</option>
+                            <option value="Z-A">Z-A</option>
+                            <option value="topdl">Most Downloaded</option>
+                            <option value="rating">Rating</option>
+                        </select>
+                        <label for="limit">Limit:</label>
+                        <select name="limit" id="limit">
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+                        </select>
+                        <div class="search_form_buttons">
+                            <input type="submit" class="button button-filter" value="Search" />
+                            <input type="button" class="button button-filter" onclick="resetForm()" value="Clear" />
+                        </div>
+                    </div>
+                </form>
+                {% if movies != null %}
+                    {# pagination tool #}
+                    {{ knp_pagination_render(movies) }}
+                    <div class="movie_list">
+                        {% for movie in movies %}
+                            <article class="img-item">
+                                <figure>
+                                    <a href="{{ path('movie_show',
+                                        {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                        <img class="poster-thumb"
+                                             src="{{ vich_uploader_asset(movie, 'posterImage') }}"
+                                             width="160" height="232" alt="{{ movie.name }} - Movie Poster">
+                                        <img class="quality-thumb"
+                                             src="{{ vich_uploader_asset(movie.torrents.first.quality, 'image') }}"
+                                             width="126"
+                                             height="90"
+                                             alt="{{ movie.name }} - Download in {{ movie.torrents.first.quality.format }}p quality">
+                                    </a>
+                                    <figcaption>
+                                        <h3>
+                                            <a class="movielink"
+                                               href="{{ path('movie_show',
+                                                   {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                                {{ movie.name }}
+                                            </a>
+                                        </h3>
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        {% endfor %}
+                    </div>
+                    {# pagination tool #}
+                    {{ knp_pagination_render(movies) }}
+                {% endif %}
+            </section>
+        </div>
+    </div>
+{% endblock %}

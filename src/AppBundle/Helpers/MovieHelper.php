@@ -15,7 +15,6 @@ use AppBundle\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\Paginator;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MovieHelper
@@ -75,7 +74,7 @@ class MovieHelper
     public function getByGenres(string $genres, int $page, int $limit) {
         return $this->getPaginator()->paginate(
             $this->movieRepository->getManyByGenresQuery(
-                explode('-', $genres)), $page, $limit, ['wrap-queries'=>true]);
+                explode('-', $genres)), $page, $limit, ['wrap-queries' => true]);
     }
 
     /**
@@ -87,6 +86,27 @@ class MovieHelper
     public function getRecent(int $page, int $limit): PaginationInterface {
         return $this->getPaginator()->paginate(
             $this->movieRepository->getRecentQuery(), $page, $limit);
+    }
+
+    /**
+     * @param int $page
+     * @param array $filters
+     * @return PaginationInterface
+     */
+    public function browse(int $page, array $filters): PaginationInterface {
+        $keyword = isset($filters['keyword']) ? $filters['keyword'] : null;
+        $quality = isset($filters['quality']) ? $filters['quality'] : null;
+        $genres = isset($filters['genres']) ? $filters['genres'] : null;
+        $rating = isset($filters['rating']) ? (int)$filters['rating'] : null;
+        $orderBy = isset($filters['orderby']) ? $filters['orderby'] : null;
+        $limit = isset($filters['limit']) ? $filters['limit'] : 20;
+
+        return $this->getPaginator()->paginate(
+            $this->movieRepository->getByFiltersQuery(
+                $keyword, $quality, $genres, $rating, $orderBy),
+            $page,
+            $limit
+        );
     }
 
     /**
