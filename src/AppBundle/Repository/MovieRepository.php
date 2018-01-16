@@ -109,14 +109,14 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
             $qb->setParameter('keyword', '%' . $keyword . '%');
         }
 
-        if ($genre != null) {
-            if ($genre != "All") {
-                $qb->andWhere('g.name = :genreName');
-                $qb->setParameter('genreName', $genre);
-            }
+
+        if ($genre != "All" && $genre != null) {
+            $qb->andWhere('g.name = :genreName');
+            $qb->setParameter('genreName', $genre);
         }
 
-        if ($rating != 0 || $rating != null) {
+
+        if ($rating != 0 && $rating != null) {
             $qb->andWhere('m.imdbRating >= :rating');
             $qb->setParameter('rating', $rating);
         }
