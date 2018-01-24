@@ -30,6 +30,24 @@ services:
         tags: ['controller.service_arguments']
 
     # Sonata admin services:
+
+## [Content group] ##
+    app.content.movie:
+            class: AppBundle\Admin\MovieAdmin
+            arguments: [~, AppBundle\Entity\Movie, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: Content, label: Movies }
+            calls:
+                - [addChild, ['@app.content.torrent']]
+            public: true
+
+    app.content.torrent:
+            class: AppBundle\Admin\TorrentAdmin
+            arguments: [~, AppBundle\Entity\Torrent, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+            public: true
+
     app.admin.genre:
         class: AppBundle\Admin\GenreAdmin
         arguments: [~, AppBundle\Entity\Genre, SonataAdminBundle:CRUD]
@@ -37,23 +55,37 @@ services:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Genre }
         public: true
 
-    app.admin.role:
-            class: AppBundle\Admin\RoleAdmin
-            arguments: [~, AppBundle\Entity\Role, SonataAdminBundle:CRUD]
-            tags:
-                - { name: sonata.admin, manager_type: orm, group: admin, label: User role }
-            public: true
-
-    app.admin.movie:
-            class: AppBundle\Admin\MovieAdmin
-            arguments: [~, AppBundle\Entity\Movie, SonataAdminBundle:CRUD]
-            tags:
-                - { name: sonata.admin, manager_type: orm, group: admin, label: Movie }
-            public: true
-
     app.admin.screenshot:
         class: AppBundle\Admin\ScreenshotAdmin
         arguments: [~, AppBundle\Entity\Screenshot, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Screenshot }
         public: true
+
+    app.admin.quality:
+        class: AppBundle\Admin\QualityAdmin
+        arguments: [~, AppBundle\Entity\Quality, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Quality}
+        public: true
+
+
+## [/Content group] ##
+
+
+## [Administration group] ##
+    app.admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Administration, label: Users }
+        public: true
+
+    app.admin.role:
+        class: AppBundle\Admin\RoleAdmin
+        arguments: [~, AppBundle\Entity\Role, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
+        public: true
+
+## [/Administration group] ##

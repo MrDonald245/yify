@@ -23,7 +23,6 @@ class GenreAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-            ->add('id')
             ->addIdentifier('name')
             ->add('_action', null, array(
                 'actions' => array(

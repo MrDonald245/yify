@@ -10,8 +10,10 @@ namespace AppBundle\Helpers;
 
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Quality;
 use AppBundle\Entity\Torrent;
 use AppBundle\Repository\MovieRepository;
+use AppBundle\Repository\QualityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\Paginator;
@@ -23,6 +25,10 @@ class MovieHelper
      * @var MovieRepository
      */
     private $movieRepository;
+    /**
+     * @var QualityRepository
+     */
+    private $qualityRepository;
     /**
      * @var ContainerInterface
      */
@@ -36,6 +42,7 @@ class MovieHelper
      */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container) {
         $this->movieRepository = $entityManager->getRepository(Movie::class);
+        $this->qualityRepository = $entityManager->getRepository(Quality::class);
         $this->container = $container;
     }
 
@@ -86,6 +93,14 @@ class MovieHelper
     public function getRecent(int $page, int $limit): PaginationInterface {
         return $this->getPaginator()->paginate(
             $this->movieRepository->getRecentQuery(), $page, $limit);
+    }
+
+    /**
+     * @param int $movieId
+     * @return mixed
+     */
+    public function getQualities(int $movieId) {
+        return $this->qualityRepository->findManyByMovieId($movieId);
     }
 
     /**

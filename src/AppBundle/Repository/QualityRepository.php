@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class QualityRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param int $movieId
+     * @return mixed
+     */
+    public function findManyByMovieId(int $movieId) {
+        return $this->createQueryBuilder('q')
+            ->innerJoin('q.torrents', 't')
+            ->innerJoin('t.movie', 'm')
+            ->where('m.id = :movieId')
+            ->setParameter('movieId', $movieId)
+            ->getQuery()->execute();
+    }
 }

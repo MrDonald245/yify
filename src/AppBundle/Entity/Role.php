@@ -41,8 +41,7 @@ class Role extends \Symfony\Component\Security\Core\Role\Role
     /**
      * Role constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->users = new ArrayCollection();
     }
 
@@ -51,24 +50,21 @@ class Role extends \Symfony\Component\Security\Core\Role\Role
      * Get id*
      * @return int
      */
-    public function getId(): int
-    {
+    public function getId(): int {
         return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getUsers(): ArrayCollection
-    {
+    public function getUsers(): ArrayCollection {
 
         return $this->users;
     }
@@ -77,8 +73,7 @@ class Role extends \Symfony\Component\Security\Core\Role\Role
     /**
      * @param string $name
      */
-    public function setName(string $name)
-    {
+    public function setName(string $name) {
         $this->name = $name;
     }
 

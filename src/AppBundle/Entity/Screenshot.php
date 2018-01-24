@@ -38,14 +38,14 @@ class Screenshot
      *
      * @ORM\Column(type="string", length=255, name="image_name")
      */
-    private $imageName = '';
+    private $imageName;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", name="image_size")
      */
-    private $imageSize = 0;
+    private $imageSize;
 
     /**
      * @var Movie
@@ -68,16 +68,14 @@ class Screenshot
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * @return Movie
      */
-    public function getMovie(): Movie
-    {
+    public function getMovie(): Movie {
         return $this->movie;
     }
 
@@ -85,8 +83,7 @@ class Screenshot
      * @param Movie $movie
      * @return Screenshot
      */
-    public function setMovie(Movie $movie): Screenshot
-    {
+    public function setMovie(Movie $movie): Screenshot {
         $this->movie = $movie;
         return $this;
     }
@@ -95,8 +92,7 @@ class Screenshot
      * @param Movie $movie
      * @return bool
      */
-    public function removeMovie(Movie $movie): bool
-    {
+    public function removeMovie(Movie $movie): bool {
         if ($movie->getId() !== $this->getId()) {
             return false;
         }
@@ -108,14 +104,14 @@ class Screenshot
     /**
      * @return File
      */
-    public function getImage(){
+    public function getImage() {
         return $this->image;
     }
 
     /**
      * @return string
      */
-    public function getImageName(): string {
+    public function getImageName(): ? string {
         return $this->imageName;
     }
 
@@ -134,7 +130,6 @@ class Screenshot
     }
 
 
-
     /**
      * @param File $image
      * @return Screenshot
@@ -143,7 +138,9 @@ class Screenshot
         $this->image = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTimeImmutable();
+            if ($this->imageSize != $image->getSize()) {
+                $this->updatedAt = new \DateTime();
+            }
             $this->imageSize = $image->getSize();
         } else {
             $this->imageSize = 0;
@@ -169,12 +166,4 @@ class Screenshot
         $this->imageSize = $imageSize;
         return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string {
-        return $this->getImageName();
-    }
 }
-

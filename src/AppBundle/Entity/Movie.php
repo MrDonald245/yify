@@ -26,74 +26,63 @@ class Movie
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=65)
      */
-    private $name = '';
-
+    private $name;
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=45)
      */
-    private $size = '';
-
+    private $size;
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=65)
      */
-    private $runtime = '';
-
+    private $runtime;
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=45)
      */
-    private $language = '';
-
+    private $language;
     /**
      * @var DateTime
      *
      * @ORM\Column(type="date", name="release_date")
      */
     private $releaseDate;
-
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    private $directors = '';
-
+    private $directors;
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    private $writers = '';
-
+    private $writers;
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    private $cast = '';
-
+    private $cast;
     /**
      * @var string
      *
      * @ORM\Column(type="text", name="description" )
      */
-    private $description = '';
-
+    private $description;
     /**
      * @var float
      *
      * @ORM\Column(type="float", name="imdb_rating")
      */
-    private $imdbRating = 0;
-
+    private $imdbRating;
     /**
      * @var ArrayCollection
      *
@@ -101,43 +90,38 @@ class Movie
      *     inversedBy="movies")
      * @ORM\JoinTable(
      *     joinColumns={
-    @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
      *     },
      *     inverseJoinColumns={
-    @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
      *     }
      * )
      */
     private $genres;
-
     /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Screenshot", mappedBy="movie")
      */
     private $screenshots;
-
     /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Torrent", mappedBy="movie")
      */
     private $torrents;
-
     /**
      * @var string
      *
      * @ORM\Column(type="string", name="youtube_link")
      */
-    private $youtubeLink = '';
-
+    private $youtubeLink;
     /**
      * @var string
      *
      * @ORM\Column(type="string", name="imdb_link", nullable=true)
      */
-    private $imdbLink = '';
-
+    private $imdbLink;
     /**
      * @var File
      *
@@ -146,46 +130,42 @@ class Movie
      *     size="posterSize")
      */
     private $posterImage;
-
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, name="poster_name")
      */
-    private $posterName = '';
-
+    private $posterName;
     /**
      * @var int
      *
      * @ORM\Column(type="integer", name="poster_size")
      */
-    private $posterSize = 0;
-
+    private $posterSize;
     /**
      * @var DateTime
      *
      * @ORM\Column(type="date", name="created_at")
      */
     private $createdAt;
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
-
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $downloaded = 0;
-
+    private $downloaded;
     /**
      * Movie constructor.
      */
+
     public function __construct() {
+        $this->downloaded = 0;
         $this->releaseDate = new DateTime();
         $this->genres = new ArrayCollection();
         $this->screenshots = new ArrayCollection();
@@ -207,7 +187,7 @@ class Movie
     /**
      * @return string
      */
-    public function getName(): string {
+    public function getName(): ? string {
         return $this->name;
     }
 
@@ -215,28 +195,28 @@ class Movie
     /**
      * @return string
      */
-    public function getSize(): string {
+    public function getSize(): ? string {
         return $this->size;
     }
 
     /**
      * @return string
      */
-    public function getRuntime(): string {
+    public function getRuntime(): ? string {
         return $this->runtime;
     }
 
     /**
      * @return string
      */
-    public function getLanguage(): string {
+    public function getLanguage(): ? string {
         return $this->language;
     }
 
     /**
      * @return DateTime
      */
-    public function getReleaseDate(): DateTime {
+    public function getReleaseDate(): ? DateTime {
         return $this->releaseDate;
     }
 
@@ -251,35 +231,35 @@ class Movie
     /**
      * @return float
      */
-    public function getImdbRating(): float {
+    public function getImdbRating(): ? float {
         return $this->imdbRating;
     }
 
     /**
      * @return string
      */
-    public function getDirectors(): string {
+    public function getDirectors(): ? string {
         return $this->directors;
     }
 
     /**
      * @return string
      */
-    public function getWriters(): string {
+    public function getWriters(): ? string {
         return $this->writers;
     }
 
     /**
      * @return string
      */
-    public function getCast(): string {
+    public function getCast(): ? string {
         return $this->cast;
     }
 
     /**
      * @return string
      */
-    public function getDescription(): string {
+    public function getDescription(): ? string {
         return $this->description;
     }
 
@@ -289,7 +269,6 @@ class Movie
     public function getGenres(): Collection {
         return $this->genres;
     }
-
 
     /**
      * @return Collection
@@ -301,28 +280,28 @@ class Movie
     /**
      * @return string
      */
-    public function getYoutubeLink(): string {
+    public function getYoutubeLink(): ? string {
         return $this->youtubeLink;
     }
 
     /**
      * @return string
      */
-    public function getImdbLink(): string {
+    public function getImdbLink(): ? string {
         return $this->imdbLink;
     }
 
     /**
      * @return DateTime
      */
-    public function getUpdatedAt(): DateTime {
+    public function getUpdatedAt(): ? DateTime {
         return $this->updatedAt;
     }
 
     /**
      * @return DateTime
      */
-    public function getCreatedAt(): DateTime {
+    public function getCreatedAt(): ? DateTime {
         return $this->createdAt;
     }
 
@@ -337,14 +316,14 @@ class Movie
     /**
      * @return string
      */
-    public function getPosterName(): string {
+    public function getPosterName(): ? string {
         return $this->posterName;
     }
 
     /**
      * @return int
      */
-    public function getPosterSize(): int {
+    public function getPosterSize(): ? int {
         return $this->posterSize;
     }
 
@@ -354,6 +333,7 @@ class Movie
     public function getTorrents(): Collection {
         return $this->torrents;
     }
+
 
     /**
      * @return int
@@ -423,6 +403,13 @@ class Movie
     public function setDirectors(string $directors): Movie {
         $this->directors = $directors;
         return $this;
+    }
+
+    /**
+     * @param int $posterSize
+     */
+    public function setPosterSize(int $posterSize) {
+        $this->posterSize = $posterSize;
     }
 
     /**

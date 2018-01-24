@@ -1,0 +1,21 @@
+services:
+    app.admin.quality:
+        class: AppBundle\Admin\QualityAdmin
+        arguments: [~, AppBundle\Entity\Quality, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Quality }
+        public: true
+
+    app.admin.torrent:
+        class: AppBundle\Admin\TorrentAdmin
+        arguments: [~, AppBundle\Entity\Torrent, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Torrent }
+        public: true
+
+    app.admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: User }
+        public: true

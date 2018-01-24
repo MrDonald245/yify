@@ -72,7 +72,7 @@ class Quality
      *
      * @return int
      */
-    public function getId() {
+    public function getId(): int {
         return $this->id;
     }
 
@@ -117,14 +117,14 @@ class Quality
     /**
      * @return int
      */
-    public function getFormat(): int {
+    public function getFormat(): ? int {
         return $this->format;
     }
 
     /**
      * @return File
      */
-    public function getImage(): File {
+    public function getImage(): ? File {
         return $this->image;
     }
 
