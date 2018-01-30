@@ -13,31 +13,33 @@
                 <h1>Latest Movies</h1>
                 <div class="movie_list">
                     {% for latest_movie in latest_movies if latest_movie is not null %}
-                        {% set torrent = latest_movie.torrents.first %}
-                        <article class="img-item">
-                            <figure>
-                                <a href="{{ path('movie_show',
-                                    {'movie': latest_movie.id, 'quality': torrent.quality.format }) }}">
-                                    <img class="poster-thumb"
-                                         src="{{ vich_uploader_asset(latest_movie, 'posterImage') }}"
-                                         width="160"
-                                         height="232" alt="Revolt - Movie Poster">
-                                    <img class="quality-thumb"
-                                         src="{{ vich_uploader_asset(torrent.quality, 'image') }}" width="126"
-                                         height="90"
-                                         alt="{{ latest_movie.name }} - Download in {{ torrent.quality.format }}p quality">
-                                </a>
-                                <figcaption>
-                                    <h3>
-                                        <a class="movielink"
-                                           href="{{ path('movie_show',
-                                               {'movie': latest_movie.id, 'quality': torrent.quality.format }) }}">
-                                            {{ latest_movie.name }}
-                                        </a>
-                                    </h3>
-                                </figcaption>
-                            </figure>
-                        </article>
+                        {% if latest_movie.readyToBeShown %}
+                            {% set torrent = latest_movie.torrents.first %}
+                            <article class="img-item">
+                                <figure>
+                                    <a href="{{ path('movie_show',
+                                        {'movie': latest_movie.id, 'quality': torrent.quality.format }) }}">
+                                        <img class="poster-thumb"
+                                             src="{{ vich_uploader_asset(latest_movie, 'posterImage') }}"
+                                             width="160"
+                                             height="232" alt="Revolt - Movie Poster">
+                                        <img class="quality-thumb"
+                                             src="{{ vich_uploader_asset(torrent.quality, 'image') }}" width="126"
+                                             height="90"
+                                             alt="{{ latest_movie.name }} - Download in {{ torrent.quality.format }}p quality">
+                                    </a>
+                                    <figcaption>
+                                        <h3>
+                                            <a class="movielink"
+                                               href="{{ path('movie_show',
+                                                   {'movie': latest_movie.id, 'quality': torrent.quality.format }) }}">
+                                                {{ latest_movie.name }}
+                                            </a>
+                                        </h3>
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        {% endif %}
                     {% else %}
                         <p>There are no movies.</p>
                     {% endfor %}

@@ -45,10 +45,11 @@ class ScreenshotAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper
+            ->with('General')
             ->add('image', 'file', [
                 'required' => false
             ])
-            ->add('imageName');
+        ->end();
     }
 
     /**

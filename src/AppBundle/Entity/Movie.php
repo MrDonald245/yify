@@ -15,6 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="movies")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MovieRepository")
  * @Vich\Uploadable()
+ * @ORM\HasLifecycleCallbacks
  */
 class Movie
 {
@@ -101,7 +102,7 @@ class Movie
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Screenshot", mappedBy="movie")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Screenshot", mappedBy="movie", cascade={"persist"})
      */
     private $screenshots;
     /**
@@ -160,6 +161,7 @@ class Movie
      * @ORM\Column(type="integer")
      */
     private $downloaded;
+
     /**
      * Movie constructor.
      */
@@ -170,8 +172,6 @@ class Movie
         $this->genres = new ArrayCollection();
         $this->screenshots = new ArrayCollection();
         $this->torrents = new ArrayCollection();
-        $this->updatedAt = new DateTime();
-        $this->createdAt = new DateTime();
     }
 
 
@@ -408,7 +408,7 @@ class Movie
     /**
      * @param int $posterSize
      */
-    public function setPosterSize(int $posterSize) {
+    public function setPosterSize(? int $posterSize) {
         $this->posterSize = $posterSize;
     }
 
@@ -484,8 +484,8 @@ class Movie
         $this->posterImage = $posterImage;
 
         if ($posterImage) {
-            $this->updatedAt = new \DateTime();
             $this->posterSize = $posterImage->getSize();
+            $this->posterName = $posterImage->getFilename();
         } else {
             $this->posterSize = 0;
         }
@@ -497,7 +497,7 @@ class Movie
      * @param string $posterName
      * @return Movie
      */
-    public function setPosterName(string $posterName = null): Movie {
+    public function setPosterName(? string $posterName = null): Movie {
         $this->posterName = $posterName;
         return $this;
     }
@@ -618,5 +618,27 @@ class Movie
 
         return true;
     }
-}
 
+    /**
+     * Checks whether a movie has both genres and torrents.
+     *
+     * @return bool
+     */
+    public function isReadyToBeShown(): bool {
+        return !$this->genres->isEmpty()
+            && !$this->torrents->isEmpty();
+    }
+
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void {
+        $this->updatedAt = new DateTime('now');
+
+        if ($this->createdAt == null) {
+            $this->createdAt = new DateTime('now');
+        }
+    }
+}

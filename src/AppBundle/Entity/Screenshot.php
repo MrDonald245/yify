@@ -50,7 +50,7 @@ class Screenshot
     /**
      * @var Movie
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Movie", inversedBy="screenshots")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Movie", inversedBy="screenshots", cascade={"persist"})
      * @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
      */
     private $movie;
@@ -142,6 +142,7 @@ class Screenshot
                 $this->updatedAt = new \DateTime();
             }
             $this->imageSize = $image->getSize();
+            $this->imageName = $image->getFilename();
         } else {
             $this->imageSize = 0;
         }
@@ -165,5 +166,12 @@ class Screenshot
     public function setImageSize(int $imageSize = null): Screenshot {
         $this->imageSize = $imageSize;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string {
+        return $this->imageName ?? 'Screenshot';
     }
 }

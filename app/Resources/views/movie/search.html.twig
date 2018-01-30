@@ -10,7 +10,8 @@
                 <form action="{{ path('movie_search') }}" id="browse_form" accept-charset="UTF-8" method="POST">
                     <div class="form-group">
                         <label class="keyword" for="keywords">Search Movie:</label>
-                        <input name="keyword" id="keywords" value="" maxlength="300" tabindex="1" type="text" placeholder="(e.g. Movie Title , Year, Actor , Director ) ..." class="keyword">
+                        <input name="keyword" id="keywords" value="" maxlength="300" tabindex="1" type="text"
+                               placeholder="(e.g. Movie Title , Year, Actor , Director ) ..." class="keyword">
                     </div>
                     <div class="select">
                         <label for="quality">Quality:</label>
@@ -79,8 +80,8 @@
                             <option value="60">60</option>
                         </select>
                         <div class="search_form_buttons">
-                            <input type="submit" class="button button-filter" value="Search" />
-                            <input type="button" class="button button-filter" onclick="resetForm()" value="Clear" />
+                            <input type="submit" class="button button-filter" value="Search"/>
+                            <input type="button" class="button button-filter" onclick="resetForm()" value="Clear"/>
                         </div>
                     </div>
                 </form>
@@ -89,30 +90,32 @@
                     {{ knp_pagination_render(movies) }}
                     <div class="movie_list">
                         {% for movie in movies %}
-                            <article class="img-item">
-                                <figure>
-                                    <a href="{{ path('movie_show',
-                                        {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
-                                        <img class="poster-thumb"
-                                             src="{{ vich_uploader_asset(movie, 'posterImage') }}"
-                                             width="160" height="232" alt="{{ movie.name }} - Movie Poster">
-                                        <img class="quality-thumb"
-                                             src="{{ vich_uploader_asset(movie.torrents.first.quality, 'image') }}"
-                                             width="126"
-                                             height="90"
-                                             alt="{{ movie.name }} - Download in {{ movie.torrents.first.quality.format }}p quality">
-                                    </a>
-                                    <figcaption>
-                                        <h3>
-                                            <a class="movielink"
-                                               href="{{ path('movie_show',
-                                                   {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
-                                                {{ movie.name }}
-                                            </a>
-                                        </h3>
-                                    </figcaption>
-                                </figure>
-                            </article>
+                            {% if movie.readyToBeShown %}
+                                <article class="img-item">
+                                    <figure>
+                                        <a href="{{ path('movie_show',
+                                            {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                            <img class="poster-thumb"
+                                                 src="{{ vich_uploader_asset(movie, 'posterImage') }}"
+                                                 width="160" height="232" alt="{{ movie.name }} - Movie Poster">
+                                            <img class="quality-thumb"
+                                                 src="{{ vich_uploader_asset(movie.torrents.first.quality, 'image') }}"
+                                                 width="126"
+                                                 height="90"
+                                                 alt="{{ movie.name }} - Download in {{ movie.torrents.first.quality.format }}p quality">
+                                        </a>
+                                        <figcaption>
+                                            <h3>
+                                                <a class="movielink"
+                                                   href="{{ path('movie_show',
+                                                       {'movie': movie.id, 'quality': movie.torrents.first.quality.format}) }}">
+                                                    {{ movie.name }}
+                                                </a>
+                                            </h3>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     {# pagination tool #}

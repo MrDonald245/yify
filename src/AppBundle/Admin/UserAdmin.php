@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Role;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -35,9 +36,21 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper
+            ->with('General' , ['class' => 'col-md-6'])
             ->add('username')
             ->add('password')
-            ->add('email');
+            ->add('email')
+            ->end()
+            ->with('Roles', ['class' => 'col-md-6'])
+            ->add('roles', 'sonata_type_model', [
+                'class' => Role::class,
+                'label' => 'Names',
+                'btn_delete' => false,
+                'multiple' => true,
+                'required' => true,
+            ])
+            ->end()
+        ;
     }
 
     protected function configureShowFields(ShowMapper $showMapper) {

@@ -37,7 +37,10 @@ class RoleAdmin extends AbstractAdmin
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper) {
-        $formMapper->add('name', 'text');
+        $formMapper
+            ->with('General')
+            ->add('name', 'text')
+            ->end();
     }
 
     /**

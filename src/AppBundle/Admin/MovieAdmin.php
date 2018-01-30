@@ -2,13 +2,16 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Screenshot;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class MovieAdmin extends AbstractAdmin
@@ -65,27 +68,10 @@ class MovieAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-            ->add('id')
+            ->addIdentifier('id')
             ->addIdentifier('name')
-            ->add('poster')
-            ->add('genres')
-            ->add('quality')
-            ->add('size')
-            ->add('runtime')
-            ->add('language')
-            ->add('releaseDate')
-            ->add('directors')
-            ->add('writers')
-            ->add('cast')
-            ->add('description')
-            ->add('imdbRating')
-            ->add('magnetLink')
-            ->add('torrentFileName')
-            ->add('youtubeLink')
-            ->add('imdbLink')
-            ->add('posterName')
-            ->add('posterSize')
             ->add('updatedAt')
+            ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -100,20 +86,41 @@ class MovieAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper
+            ->with('General', ['class' => 'col-md-5'])
             ->add('name', 'text')
             ->add('size', 'text')
-            ->add('posterImage', 'file')
-            ->add('posterName', 'text')
+            ->add('posterImage', 'file', ['required' => false])
             ->add('runtime', 'text')
             ->add('language', 'text')
             ->add('releaseDate', 'date')
+            ->end()
+            ->with('Detailed info', ['class' => 'col-md-7'])
             ->add('directors', 'textarea')
             ->add('writers', 'textarea')
             ->add('cast', 'textarea')
             ->add('description', 'textarea')
             ->add('imdbRating', 'number')
             ->add('youtubeLink', 'text')
-            ->add('imdbLink', 'text');
+            ->add('imdbLink', 'text')
+            ->end()
+            ->with('Genres', ['class' => 'col-md-5'])
+            ->add('genres', 'sonata_type_model', [
+                'class' => Genre::class,
+                'label' => 'Name',
+                'btn_delete' => false,
+                'multiple' => true,
+                'required' => true,
+            ])
+            ->end()
+            ->with('Screenshots', ['class' => 'col-md-7'])
+            ->add('screenshots', 'sonata_type_collection', array(
+                'by_reference' => false,
+                'required' => false,
+            ), array(
+                'edit' => 'inline',
+                'inline' => 'table'
+            ))
+            ->end();
 
         /**
          *

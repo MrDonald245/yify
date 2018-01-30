@@ -14,6 +14,7 @@ use AppBundle\Entity\Quality;
 use AppBundle\Entity\Torrent;
 use AppBundle\Repository\MovieRepository;
 use AppBundle\Repository\QualityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\Paginator;

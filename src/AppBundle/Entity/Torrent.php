@@ -79,16 +79,16 @@ class Torrent
     }
 
     /**
-     * @return File
+     * @return null|File
      */
-    public function getFile(): File {
+    public function getFile(): ? File {
         return $this->file;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getFileName(): string {
+    public function getFileName(): ? string {
         return $this->fileName;
     }
 
@@ -100,23 +100,23 @@ class Torrent
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMagnetLink(): string {
+    public function getMagnetLink(): ? string {
         return $this->magnetLink;
     }
 
     /**
-     * @return Movie
+     * @return Movie|null
      */
-    public function getMovie(): Movie {
+    public function getMovie(): ? Movie {
         return $this->movie;
     }
 
     /**
-     * @return Quality
+     * @return null|Quality
      */
-    public function getQuality(): Quality {
+    public function getQuality(): ? Quality {
         return $this->quality;
     }
 
@@ -127,6 +127,7 @@ class Torrent
     public function setFile(File $file = null): Torrent {
         $this->file = $file;
         $this->fileSize = $file->getSize() ?? 0;
+        $this->fileName = $this->file->getFilename();
 
         return $this;
     }
@@ -135,9 +136,18 @@ class Torrent
      * @param string $fileName
      * @return Torrent
      */
-    public function setFileName(string $fileName): Torrent {
+    public function setFileName(? string $fileName): Torrent {
         $this->fileName = $fileName;
 
+        return $this;
+    }
+
+    /**
+     * @param int $fileSize
+     * @return Torrent
+     */
+    public function setFileSize(? int $fileSize): Torrent {
+        $this->fileSize = $fileSize;
         return $this;
     }
 
@@ -195,5 +205,12 @@ class Torrent
 
         $this->quality = null;
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string {
+        return $this->fileName ?? 'Torrent';
     }
 }

@@ -2,10 +2,13 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Genre;
+use AppBundle\Entity\Quality;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class TorrentAdmin extends AbstractAdmin
@@ -37,8 +40,17 @@ class TorrentAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper
-            ->add('fileName')
-            ->add('magnetLink');
+            ->with('General', ['class' => 'col-md-6'])
+            ->add('file', 'file')
+            ->add('magnetLink')
+            ->end()
+            ->with('Quality', ['class' => 'col-md-6'])
+            ->add('quality', ModelListType::class, [
+                'class' => Quality::class,
+                'label' => 'Format',
+                'btn_delete' => false,
+            ])
+            ->end();
     }
 
     protected function configureShowFields(ShowMapper $showMapper) {
