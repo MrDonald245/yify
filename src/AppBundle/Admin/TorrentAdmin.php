@@ -41,7 +41,7 @@ class TorrentAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper
             ->with('General', ['class' => 'col-md-6'])
-            ->add('file', 'file')
+            ->add('file', 'file', ['required' => false])
             ->add('magnetLink')
             ->end()
             ->with('Quality', ['class' => 'col-md-6'])

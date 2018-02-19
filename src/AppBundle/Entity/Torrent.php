@@ -126,8 +126,8 @@ class Torrent
      */
     public function setFile(File $file = null): Torrent {
         $this->file = $file;
-        $this->fileSize = $file->getSize() ?? 0;
-        $this->fileName = $this->file->getFilename();
+        $this->fileSize = $file ? $file->getSize() : 0;
+        $this->fileName = $file ? $this->file->getFilename() : $this->fileName;
 
         return $this;
     }
@@ -146,7 +146,7 @@ class Torrent
      * @param int $fileSize
      * @return Torrent
      */
-    public function setFileSize(? int $fileSize): Torrent {
+        public function setFileSize(? int $fileSize): Torrent {
         $this->fileSize = $fileSize;
         return $this;
     }
