@@ -34,10 +34,12 @@ class MovieController extends Controller
     public function showMovieAction(Movie $movie, int $quality): Response {
         $torrent = $this->getDoctrine()->getRepository(Torrent::class)
             ->findOneByMovieIdAndFormat($movie->getId(), $quality);
+        $relatedMovies = $this->movieHelper->getRelatedMovies($movie);
 
         return $this->render('movie/show.html.twig', [
             'movie' => $movie,
             'torrent' => $torrent,
+            'relatedMovies' => $relatedMovies,
         ]);
     }
 

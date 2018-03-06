@@ -138,6 +138,20 @@ class MovieHelper
     }
 
     /**
+     * @param Movie $movie
+     * @return ArrayCollection
+     */
+    public function getRelatedMovies(Movie $movie): ArrayCollection {
+        $relatedMovies = new ArrayCollection();
+
+        $relatedMovies->add($this->movieRepository->find(4));
+        $relatedMovies->add($this->movieRepository->find(5));
+        $relatedMovies->add($this->movieRepository->find(6));
+
+        return $relatedMovies;
+    }
+
+    /**
      * @return \Knp\Component\Pager\Paginator|object
      */
     private function getPaginator(): Paginator {

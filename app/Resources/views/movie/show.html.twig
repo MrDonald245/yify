@@ -1,6 +1,7 @@
 {% extends 'layout_with_yify_theme.html.twig' %}
 
 {# @var movie \AppBundle\Entity\Movie #}
+{# @var relatedMovie \AppBundle\Entity\Movie #}
 {# @var screenshot \AppBundle\Entity\Screenshot #}
 {# @var torrent \AppBundle\Entity\Torrent #}
 
@@ -98,68 +99,30 @@
         <div class="movie_right_column">
             <h2>Related Movies:</h2>
             <ul>
-                <li>
-                    <article>
-                        <figure>
-                            <div class="image_left">
-                                <a href="https://yifymovies.to/movie/in-time-2011-720p/">
-                                    <img width="110" height="160"
-                                         src="https://yifymovies.to/images/poster/in-time-2011-movie-poster.jpg"
-                                         alt="In Time - Read More">
-                                </a>
-                            </div>
-                            <figcaption>
-                                <h3><a class="movtitle" href="/movie/in-time-2011-720p/">In Time</a></h3>
-                                <p>Welcome to a world where time has become the ultimate currency. You stop aging at 25,
-                                    but there's a catch: you're genetically-engineered to live only one more year,
-                                    unless you can buy your way out of ...</p>
-                            </figcaption>
-                        </figure>
-                        <span class="read_more"><a
-                                    href="https://yifymovies.to/movie/in-time-2011-720p/">Read More &raquo;</a></span>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <figure>
-                            <div class="image_left">
-                                <a href="https://yifymovies.to/movie/christmas-icetastrophe-2014-720p/">
-                                    <img width="110" height="160"
-                                         src="https://yifymovies.to/images/poster/christmas-icetastrophe-2014-movie-poster.jpg"
-                                         alt="Christmas Icetastrophe - Read More">
-                                </a>
-                            </div>
-                            <figcaption>
-                                <h3><a class="movtitle" href="/movie/christmas-icetastrophe-2014-720p/">Christmas
-                                        Icetastrophe</a></h3>
-                                <p>A meteorite brings ice and freezing temperatures, which threatens to harm the
-                                    residents of a small town at Christmas.</p>
-                            </figcaption>
-                        </figure>
-                        <span class="read_more"><a href="https://yifymovies.to/movie/christmas-icetastrophe-2014-720p/">Read More &raquo;</a></span>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <figure>
-                            <div class="image_left">
-                                <a href="https://yifymovies.to/movie/dredd-2012-1080p/">
-                                    <img width="110" height="160"
-                                         src=""
-                                         alt="">
-                                </a>
-                            </div>
-                            <figcaption>
-                                <h3><a class="movtitle" href="/movie/dredd-2012-1080p/">Dredd</a></h3>
-                                <p>The future America is an irradiated waste land. On its East Coast, running from
-                                    Boston to Washington DC, lies Mega City One - a vast, violent metropolis where
-                                    criminals rule the chaotic streets. The o...</p>
-                            </figcaption>
-                        </figure>
-                        <span class="read_more"><a
-                                    href="https://yifymovies.to/movie/dredd-2012-1080p/">Read More &raquo;</a></span>
-                    </article>
-                </li>
+                {% for relatedMovie in relatedMovies %}
+                    <li>
+                        <article>
+                            <figure>
+                                <div class="image_left">
+                                    <a href="{{ path('movie_show', {'movie': relatedMovie.id, 'quality': 720}) }}">
+                                        <img width="110" height="160"
+                                             src="{{ vich_uploader_asset(relatedMovie, 'posterImage') }}"
+                                             alt="{{ relatedMovie.name }} - Read More">
+                                    </a>
+                                </div>
+                                <figcaption>
+                                    <h3><a class="movtitle"
+                                           href="{{ path('movie_show', {'movie': relatedMovie.id, 'quality': 720}) }}">
+                                            {{ relatedMovie.name }}</a></h3>
+                                    <p>{{ relatedMovie.description }}</p>
+                                </figcaption>
+                            </figure>
+                            <span class="read_more"><a
+                                        href="{{ path('movie_show', {'movie': relatedMovie.id, 'quality': 720}) }}">
+                                    Read More &raquo;</a></span>
+                        </article>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </section>
